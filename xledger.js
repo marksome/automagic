@@ -19,13 +19,25 @@ function appendButton() {
 }
 
 function getFavoritter() {
-  var favoritter = document.querySelectorAll('[id^="timesheet-code-button-header"]')[0];
-  if (favoritter) {
-    favoritter.dispatchEvent(new Event("click", { bubbles: true }));
-    var dialog = document.querySelectorAll('[id^="dialog-id"]')[1];
-    var i = dialog.getElementsByClassName("fas fa-times fa-lg")[0];
-    i.dispatchEvent(new Event("click", { bubbles: true }));
-    applyHours();
+  var favoritter_tab = document.getElementsByClassName("fad fa-star");
+  if (favoritter_tab[0]) {
+    favoritter_tab[0].parentNode.dispatchEvent(new Event("click", { bubbles: true }));
+    var favoritter = document.querySelectorAll('[id^="timesheet-code-button-header"]')[0];
+    if (favoritter) {
+      favoritter.dispatchEvent(new Event("click", { bubbles: true }));
+      var dialog = document.querySelectorAll('[id^="dialog-id"]')[1];
+      var i = dialog.getElementsByClassName("fas fa-times fa-lg")[0];
+      i.dispatchEvent(new Event("click", { bubbles: true }));
+      applyHours();
+    } else {
+      var favoritter_button = app.querySelector('[aria-label="Favoritter"]');
+      favoritter_button.dispatchEvent(new Event("click", { bubbles: true }));
+      setTimeout(() => {
+        getFavoritter();
+      }, 500);
+      return;
+    }
+    return;
   } else {
     var favoritter_button = app.querySelector('[aria-label="Favoritter"]');
     favoritter_button.dispatchEvent(new Event("click", { bubbles: true }));
@@ -34,7 +46,6 @@ function getFavoritter() {
     }, 500);
     return;
   }
-  return;
 }
 
 function applyHours() {
@@ -65,7 +76,7 @@ function applyHours() {
     table[0].dispatchEvent(new Event("click", { bubbles: true }));
     const flex = app.getElementsByClassName("flex gap-2")[0];
     var i = flex.getElementsByClassName("fas fa-save")[0];
-    // Lagre endringer
+    // Store changes
     i.dispatchEvent(new Event("click", { bubbles: true }));
   } else {
     getTable();
