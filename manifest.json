@@ -1,0 +1,23 @@
+{
+  "name": "AutoMagic",
+  "description": "AutoMagic time registration. Created by Markus Baartvedt.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "w.png",
+    "default_title": "AutoMagic"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "content_scripts":
+  [
+      {
+          "run_at": "document_end",
+          "matches":["https://www.xledger.net/*"],
+          "js": ["xledger.js"]
+      }
+  ]
+}
