@@ -30,12 +30,23 @@ function getFavoritter() {
       i.dispatchEvent(new Event("click", { bubbles: true }));
       applyHours();
     } else {
+      var ingen_favoritter = document.getElementsByClassName("text-lg sm:px-7 px-3")[0];
+      if (ingen_favoritter) {
+        if (document.getElementById("endre_favoritter")) {
+          // If button is present, do nothing
+          return;
+        } else {
+        appendFavoritterButton(ingen_favoritter);
+        }
+        return;
+      } else {
       var favoritter_button = app.querySelector('[aria-label="Favoritter"]');
       favoritter_button.dispatchEvent(new Event("click", { bubbles: true }));
       setTimeout(() => {
         getFavoritter();
       }, 500);
       return;
+      }
     }
     return;
   } else {
@@ -46,6 +57,27 @@ function getFavoritter() {
     }, 500);
     return;
   }
+}
+
+function changeFavoritter() {
+  window.open("https://www.xledger.net/Restricted/Frame.aspx?ck2=1&ck3=1&Mnu=1742", "_blank").focus();
+}
+
+function appendFavoritterButton(ingen_favoritter) {
+  var button = document.createElement("button");
+  button.className = "btn btn-blue rounded";
+  button.innerText = "Endre Favoritter";
+  button.addEventListener("click", changeFavoritter, false);
+  button.id = "endre_favoritter";
+  var span = document.createElement("span");
+  span.className = "mr-2";
+  var i = document.createElement("i");
+  i.className = "fa-solid fa-wand-magic-sparkles";
+  button.appendChild(span);
+  button.appendChild(i);
+  var p = document.createElement("p");
+  ingen_favoritter.appendChild(p);
+  ingen_favoritter.appendChild(button);
 }
 
 function applyHours() {
